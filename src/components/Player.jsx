@@ -2,11 +2,13 @@ import { useState, useRef } from 'react';
 
 export default function Player() {
   const playerName = useRef(); // Use the useRef and attach it to the elements so you can get the actual element itself to do manipulation or get the values for that element
-  const [inputName, setInputName] = useState('');
+  const [inputName, setInputName] = useState(null);
 
-  function handleClick() {
-    setInputName(prev => (prev = playerName.current.value));
-  }
+  const handleClick = () => {
+    if (!playerName.current.value.trim()) return;
+    setInputName(playerName.current.value);
+    playerName.current.value = '';
+  };
 
   return (
     <section id="player">

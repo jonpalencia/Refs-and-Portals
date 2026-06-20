@@ -1,25 +1,18 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function Player() {
+  const playerName = useRef(); // Use the useRef and attach it to the elements so you can get the actual element itself to do manipulation or get the values for that element
   const [inputName, setInputName] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  function handleChangeInput(e) {
-    setSubmitted(prev => (prev = false));
-    const nameResult = e.target.value;
-    setInputName(prevName => (prevName = nameResult));
-    console.log(nameResult);
-  }
 
   function handleClick() {
-    setSubmitted(prev => (prev = true));
+    setInputName(prev => (prev = playerName.current.value));
   }
 
   return (
     <section id="player">
-      <h2>Welcome {submitted ? `${inputName}!` : 'User, '} </h2>
+      <h2>Welcome {inputName ? `${inputName}!` : 'User,'} </h2>
       <p>
-        <input type="text" onChange={handleChangeInput} value={inputName} />
+        <input ref={playerName} type="text" />
         <button onClick={handleClick}>Set Name</button>
       </p>
     </section>
